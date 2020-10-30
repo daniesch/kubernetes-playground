@@ -1,0 +1,27 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: arcadia-ingress
+  namespace: arcadia
+spec:
+  rules:
+  - host: www.arcadia-finance.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: main
+          servicePort: 80
+      - path: /files
+        backend:
+          serviceName: backend
+          servicePort: 80
+      - path: /api
+        backend:
+          serviceName: app2
+          servicePort: 80
+      - path: /app3
+        backend:
+          serviceName: app3
+          servicePort: 80
