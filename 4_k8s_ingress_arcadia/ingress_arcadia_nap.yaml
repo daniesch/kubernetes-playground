@@ -1,7 +1,7 @@
 apiVersion: appprotect.f5.com/v1beta1
 kind: APPolicy
 metadata:
-  name: dataguard-blocking
+  name: dataguard-blocking\
 spec:
   policy:
     applicationLanguage: utf-8

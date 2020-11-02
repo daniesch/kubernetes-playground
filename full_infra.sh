@@ -44,8 +44,5 @@ sleep .5
 
 ## DEPLOY prometheus & grafana
 
-kubectl apply -f 5_prometheus_grafana/grafana/grafana.yaml
+kubectl apply -f 5_prometheus_grafana/manifests-all.yaml
 sleep .5
-kubectl apply -f 5_prometheus_grafana/prometheus/prometheus_deplo.yaml
-sleep .5
-kubectl apply -f 5_prometheus_grafana/prometheus/prometheus.yml

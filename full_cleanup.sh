@@ -41,10 +41,7 @@ sleep .5
 
 ## DELETE prometheus & grafana
 
-kubectl delete -f 5_prometheus_grafana/grafana/grafana.yaml
-sleep .5
-kubectl delete -f 5_prometheus_grafana/prometheus/prometheus_configmap.yml
-kubectl delete -f 5_prometheus_grafana/prometheus/prometheus.yaml
+kubectl delete -f 5_prometheus_grafana/manifests-all.yaml
 sleep .5
 
 

@@ -4,6 +4,10 @@ kind: Service
 metadata:
   name: nginx-ingress
   namespace: nginx-ingress
+  annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9113"
+      prometheus.io/path: '/metrics'
 spec:
   type: NodePort
   ports:
