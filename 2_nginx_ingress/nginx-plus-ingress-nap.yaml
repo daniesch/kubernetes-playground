@@ -18,7 +18,7 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: danisch/nginx-plus-nap:1.8.1
+      - image: danisch/nginx-plus-nap:1.9.0
         imagePullPolicy: IfNotPresent
         name: nginx-plus-ingress
         ports:
@@ -57,9 +57,8 @@ spec:
           - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
           - -enable-app-protect
-          - -enable-prometheus-metrics
          #- -v=3 # Enables extensive logging. Useful for troubleshooting.
-         #- -report-ingress-status
-         #- -external-service=nginx-ingress
-
+          - -report-ingress-status
+          - -external-service=nginx-ingress
+          - -enable-prometheus-metrics
          #- -global-configuration=$(POD_NAMESPACE)/nginx-configuration
