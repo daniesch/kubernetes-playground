@@ -40,10 +40,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - hackazon.dansch.ch
+    - hackazon.schuler.io
     secretName: default-server-secret-hackazon
   rules:
-  - host: hackazon.dansch.ch
+  - host: hackazon.schuler.io
     http:
       paths:
       - path: /
