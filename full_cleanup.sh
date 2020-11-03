@@ -35,18 +35,15 @@ sleep .5
 ## DELETE arcadia & dvwa & hackazon
 
 kubectl delete -f 3_arcadia_app/
-kubectl delete -f 3_arcadia_app/nap/
 sleep .5
 kubectl delete -f 4_dvwa/
-kubectl delete -f 4_dvwa/nap/
 sleep .5
 kubectl delete -f 5_hackazon/
-kubectl delete -f 5_hackazon/nap
 sleep .5
 
 ## DELETE prometheus & grafana
 
-kubectl delete -f 5_prometheus_grafana/
+kubectl delete -f 6_prometheus_grafana/
 sleep .5
 
 

@@ -46,5 +46,5 @@ sleep .5
 
 ## DEPLOY prometheus & grafana
 
-kubectl apply -f 5_prometheus_grafana/
+kubectl apply -f 6_prometheus_grafana/
 sleep .5
