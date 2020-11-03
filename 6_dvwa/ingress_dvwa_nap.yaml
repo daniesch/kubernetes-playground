@@ -38,6 +38,10 @@ metadata:
     appprotect.f5.com/app-protect-security-log-destination: "syslog:server=10.1.20.6:5144"
 
 spec:
+  tls:
+  - hosts:
+    - dvwa.dansch.ch
+    secretName: default-server-secret
   rules:
   - host: dvwa.dansch.ch
     http:

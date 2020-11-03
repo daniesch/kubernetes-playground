@@ -31,6 +31,8 @@ kubectl delete -f 2_nginx_ingress/nginx-plus-ingress-nap.yaml
 sleep .5
 kubectl delete -f 2_nginx_ingress/nodeport.yaml
 sleep .5
+kubectl delete -f 6_dvwa/
+sleep .5
 
 ## DELETE arcadia
 
