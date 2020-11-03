@@ -28,8 +28,8 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: arcadia-ingress
-  namespace: arcadia
+  name: dvwa-ingress
+  namespace: dvwa
   annotations:
     appprotect.f5.com/app-protect-policy: "default/dataguard-blocking"
     appprotect.f5.com/app-protect-enable: "True"
@@ -38,23 +38,15 @@ metadata:
     appprotect.f5.com/app-protect-security-log-destination: "syslog:server=10.1.20.6:5144"
 
 spec:
+  tls:
+  - hosts:
+    - dvwa.schuler.io
+    secretName: default-server-secret-dvwa
   rules:
-  - host: arcadia.dansch.ch
+  - host: dvwa.schuler.io
     http:
       paths:
       - path: /
         backend:
-          serviceName: main
-          servicePort: 80
-      - path: /files
-        backend:
-          serviceName: backend
-          servicePort: 80
-      - path: /api
-        backend:
-          serviceName: app2
-          servicePort: 80
-      - path: /app3
-        backend:
-          serviceName: app3
+          serviceName: dvwa
           servicePort: 80

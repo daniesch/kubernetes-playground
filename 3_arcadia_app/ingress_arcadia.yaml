@@ -5,8 +5,12 @@ metadata:
   name: arcadia-ingress
   namespace: arcadia
 spec:
+  tls:
+  - hosts:
+    - arcadia.schuler.io
+    secretName: default-server-secret-arcadia
   rules:
-  - host: arcadia.dansch.ch
+  - host: arcadia.schuler.io
     http:
       paths:
       - path: /

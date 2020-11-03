@@ -31,14 +31,17 @@ kubectl delete -f 2_nginx_ingress/nginx-plus-ingress-nap.yaml
 sleep .5
 kubectl delete -f 2_nginx_ingress/nodeport.yaml
 sleep .5
-kubectl delete -f 6_dvwa/
-sleep .5
 
-## DELETE arcadia
+## DELETE arcadia & dvwa & hackazon
 
-kubectl delete -f 3_arcadia_app/all_apps.yaml
+kubectl delete -f 3_arcadia_app/
+kubectl delete -f 3_arcadia_app/nap/
 sleep .5
-kubectl delete -f 4_k8s_ingress_arcadia/ingress_arcadia.yaml
+kubectl delete -f 4_dvwa/
+kubectl delete -f 4_dvwa/nap/
+sleep .5
+kubectl delete -f 5_hackazon/
+kubectl delete -f 5_hackazon/nap
 sleep .5
 
 ## DELETE prometheus & grafana

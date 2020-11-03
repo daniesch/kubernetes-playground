@@ -415,7 +415,7 @@ spec:
   tls:
   - hosts:
     - prometheus.dansch.ch
-    secretName: default-server-secret
+    secretName: default-server-secret-monitoring
   rules:
   - host: prometheus.dansch.ch
     http:

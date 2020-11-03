@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hackazon-ingress
+  namespace: hackazon
+spec:
+  tls:
+  - hosts:
+    - hackazon.schuler.io
+    secretName: default-server-secret-hackazon
+  rules:
+  - host: hackazon.schuler.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hackazon
+          servicePort: 80

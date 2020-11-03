@@ -13,7 +13,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
-    nodePort: 31584
+    nodePort: 30181
     name: backend-80
   selector:
     app: backend
@@ -64,7 +64,7 @@ spec:
   type: NodePort
   ports:
   - name: main-80
-    nodePort: 30511
+    nodePort: 30182
     port: 80
     protocol: TCP
     targetPort: 80
@@ -118,7 +118,7 @@ spec:
   ports:
   - port: 80
     name: app2-80
-    nodePort: 30362
+    nodePort: 30183
   selector:
     app: app2
 ---
@@ -169,7 +169,7 @@ spec:
   ports:
   - port: 80
     name: app3-80
-    nodePort: 31662
+    nodePort: 30184
   selector:
     app: app3
 ---

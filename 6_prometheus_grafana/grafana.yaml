@@ -95,7 +95,7 @@ spec:
   tls:
   - hosts:
     - grafana.dansch.ch
-    secretName: default-server-secret
+    secretName: default-server-secret-monitoring
   rules:
   - host: grafana.dansch.ch
     http:

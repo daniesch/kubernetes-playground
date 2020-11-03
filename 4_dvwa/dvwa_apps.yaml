@@ -7,11 +7,11 @@ metadata:
     app: dvwa
     service: dvwa
 spec:
-  type: NodePort
   ports:
   - port: 80
-    nodePort: 31555
     name: dvwa-80
+    protocol: TCP
+    name: http
   selector:
     app: dvwa
 

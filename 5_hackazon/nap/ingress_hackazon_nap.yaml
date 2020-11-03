@@ -28,8 +28,8 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: dvwa-ingress
-  namespace: dvwa
+  name: hackazon-ingress
+  namespace: hackazon
   annotations:
     appprotect.f5.com/app-protect-policy: "default/dataguard-blocking"
     appprotect.f5.com/app-protect-enable: "True"
@@ -40,13 +40,13 @@ metadata:
 spec:
   tls:
   - hosts:
-    - dvwa.dansch.ch
-    secretName: default-server-secret
+    - hackazon.dansch.ch
+    secretName: default-server-secret-hackazon
   rules:
-  - host: dvwa.dansch.ch
+  - host: hackazon.dansch.ch
     http:
       paths:
       - path: /
         backend:
-          serviceName: dvwa
+          serviceName: hackazon
           servicePort: 80
