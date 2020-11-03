@@ -7,6 +7,12 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: dvwa
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: arcadia
 
 ---
