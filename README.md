@@ -5,7 +5,7 @@ This project should help SE to set up a fully functional home env on their k8s c
 
 ## Get Started!
 
-# minikube 
+### minikube 
 
 minikube is local Kubernetes, focusing on making it easy to learn and develop for Kubernetes.
 
@@ -19,7 +19,7 @@ Internet connection
 Container or virtual machine manager, such as: Docker, Hyperkit, Hyper-V, KVM, Parallels, Podman, VirtualBox, or VMWare
 
 
-# For Linux users:
+### For Linux users:
 
 Binary download
 ```
@@ -37,7 +37,7 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-latest
 sudo rpm -ivh minikube-latest.x86_64.rpm
 ```
 
-# for Mac users:
+### for Mac users:
 
 If the Brew Package Manager installed:
 ```
@@ -55,7 +55,7 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin
 sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 ```
 
-# For Windows users:
+### For Windows users:
 
 If the Chocolatey Package Manager is installed, use it to install minikube:
 https://chocolatey.org/
