@@ -28,7 +28,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: arcadia-ingress
+  name: dvwa-ingress
   namespace: dvwa
   annotations:
     appprotect.f5.com/app-protect-policy: "default/dataguard-blocking"

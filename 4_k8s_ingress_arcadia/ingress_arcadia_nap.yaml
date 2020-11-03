@@ -39,7 +39,7 @@ metadata:
 
 spec:
   rules:
-  - host: www.arcadia-finance.io
+  - host: arcadia.dansch.ch
     http:
       paths:
       - path: /
