@@ -7,6 +7,8 @@ kubectl apply -f 1_basicdeployment/rbac.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/ap-rbac.yaml
 sleep .5
+kubectl apply -f 1_basicdeployment/ingress-class.yaml
+sleep .5
 kubectl apply -f 1_basicdeployment/default-server-secret.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/nginx-config.yaml
@@ -46,5 +48,5 @@ sleep .5
 
 ## DEPLOY prometheus & grafana
 
-kubectl apply -f 5_prometheus_grafana/
+kubectl apply -f 6_prometheus_grafana/
 sleep .5
