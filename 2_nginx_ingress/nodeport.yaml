@@ -16,11 +16,6 @@ spec:
     nodePort: 30080
     protocol: TCP
     name: http
-  - port: 8080
-    targetPort: 8080
-    nodePort: 30880
-    protocol: TCP
-    name: httpv2
   - port: 443
     targetPort: 443
     nodePort: 30443

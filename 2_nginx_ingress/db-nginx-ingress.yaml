@@ -20,4 +20,4 @@ spec:
       - path: /dashboard.html
         backend:
           serviceName: nginx-ingress
-          servicePort: 8080
+          servicePort: 80
