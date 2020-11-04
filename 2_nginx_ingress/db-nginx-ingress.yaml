@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-db
+  namespace: nginx-ingress
+  labels:
+    app: nginx-db
+    service: nginx-db
+spec:
+  ports:
+  - port: 80
+    name: nginx-db-80
+    protocol: TCP
+    name: nginx-db
+  selector:
+    app: nginx-ingress
+---
+
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-db-ingress
+  namespace: nginx-ingress
+spec:
+  tls:
+  - hosts:
+    - nginx-db.schuler.io
+    secretName: default-server-secret-nginx-db
+  rules:
+  - host: nginx-db.schuler.io
+    http:
+      paths:
+      - path: /dashboard.html
+        backend:
+          serviceName: nginx-db
+          servicePort: 80
