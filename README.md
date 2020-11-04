@@ -20,6 +20,26 @@ Example:
 python FindAndReplace.py example.com xyz.io
 ```    
 
+Output should look like this:
+
+```
+[Old String]         : example.com
+[New String]         : xyz.io
+[File Filters]       : .yaml
+[Directory To Check] : ./
+Files found matching patterns: 30
+String Found and Updating File: ./4_dvwa/ingress_dvwa.yaml
+String Found and Updating File: ./4_dvwa/nap/ingress_dvwa_nap.yaml
+String Found and Updating File: ./6_prometheus_grafana/prometheus.yaml
+String Found and Updating File: ./6_prometheus_grafana/grafana.yaml
+String Found and Updating File: ./5_hackazon/ingress_hackazon.yaml
+String Found and Updating File: ./5_hackazon/nap/ingress_hackazon_nap.yaml
+String Found and Updating File: ./2_nginx_ingress/db-nginx-ingress.yaml
+String Found and Updating File: ./3_arcadia_app/ingress_arcadia.yaml
+String Found and Updating File: ./3_arcadia_app/nap/ingress_arcadia_nap.yaml
+Total Files Searched         : 30
+Total Files Replaced/Updated : 9
+```
 
 ### minikube
 
