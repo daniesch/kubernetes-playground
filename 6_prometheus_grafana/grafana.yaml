@@ -94,10 +94,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - grafana.example.com
+    - grafana.schuler.io
     secretName: default-server-secret-monitoring
   rules:
-  - host: grafana.example.com
+  - host: grafana.schuler.io
     http:
       paths:
       - path: /

@@ -11,13 +11,13 @@ metadata:
 spec:
   tls:
   - hosts:
-    - nginx-db.example.com
+    - nginx-db.schuler.io
     secretName: default-server-secret-nginx-db
   rules:
-  - host: nginx-db.example.com
+  - host: nginx-db.schuler.io
     http:
       paths:
       - path: /dashboard.html
         backend:
           serviceName: nginx-ingress
-          servicePort: 80
+          servicePort: 30880
