@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-db-ingress
+  namespace: nginx-ingress
+  annotations:
+    nginx.org/server-snippets:
+      location / {
+        return 301 /dashboard.html;
+      }
+spec:
+  tls:
+  - hosts:
+    - nginx-db.example.com
+    secretName: default-server-secret-nginx-db
+  rules:
+  - host: nginx-db.example.com
+    http:
+      paths:
+      - path: /dashboard.html
+        backend:
+          serviceName: nginx-ingress
+          servicePort: 30880

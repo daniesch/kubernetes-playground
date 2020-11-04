@@ -9,6 +9,37 @@ You can use any k8s environment to play around with the following ENVIRONMENT, i
 
 Skip the next section if you have a running k8s, where you can play around with, but be carefully if you habe a NAMESPACE monitoring, arcadia, dvwa or hackazon. Does will be deleted at the END, if you run the cleanup.
 
+## Change HOST name to match with what you like.
+
+Usage: python FindAndReplace.py [Old String] [New String] ' \
+    '[File Filters(default:".yaml")] [Directory To Check(./)]
+
+Example:
+
+```
+python FindAndReplace.py example.com xyz.io
+```    
+
+Output should look like this:
+
+```
+[Old String]         : example.com
+[New String]         : xyz.io
+[File Filters]       : .yaml
+[Directory To Check] : ./
+Files found matching patterns: 30
+String Found and Updating File: ./4_dvwa/ingress_dvwa.yaml
+String Found and Updating File: ./4_dvwa/nap/ingress_dvwa_nap.yaml
+String Found and Updating File: ./6_prometheus_grafana/prometheus.yaml
+String Found and Updating File: ./6_prometheus_grafana/grafana.yaml
+String Found and Updating File: ./5_hackazon/ingress_hackazon.yaml
+String Found and Updating File: ./5_hackazon/nap/ingress_hackazon_nap.yaml
+String Found and Updating File: ./2_nginx_ingress/db-nginx-ingress.yaml
+String Found and Updating File: ./3_arcadia_app/ingress_arcadia.yaml
+String Found and Updating File: ./3_arcadia_app/nap/ingress_arcadia_nap.yaml
+Total Files Searched         : 30
+Total Files Replaced/Updated : 9
+```
 
 ### minikube
 
@@ -85,14 +116,12 @@ with the following shell script will you be able to deploy all Apps, with nginx 
 
 ```
 ./full_infra.sh
-
 ```
 
 List the new deployed pods:
 
 ```
 kubectl get pods -owide -A
-
 ```
 
 You should se that we newly deployed nginx KIC, ARCADIA, DVWA & Hackazon. On Top did i Add Prometheus, Grafana & Alertmanager, just for getting a felling with it.
@@ -105,5 +134,4 @@ like dvwa.schuler.io:30080 or hackazon.schuler.io:30443
 
 ```
 ./full_cleanup.sh
-
 ```

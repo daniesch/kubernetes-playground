@@ -25,11 +25,9 @@ sleep .5
 kubectl delete -f 1_basicdeployment/ap-policy-definition.yaml
 sleep .5
 
-## DELETE Ingress NGINX PLUS & Service for Ingress
+## DELETE Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
 
-kubectl delete -f 2_nginx_ingress/nginx-plus-ingress-nap.yaml
-sleep .5
-kubectl delete -f 2_nginx_ingress/nodeport.yaml
+kubectl delete -f 2_nginx_ingress/
 sleep .5
 
 ## DELETE arcadia & dvwa & hackazon

@@ -28,11 +28,9 @@ sleep .5
 kubectl apply -f 1_basicdeployment/ap-policy-definition.yaml
 sleep .5
 
-## DEPLOY Ingress NGINX PLUS & Service for Ingress
+## DEPLOY Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
 
-kubectl apply -f 2_nginx_ingress/nginx-plus-ingress-nap.yaml
-sleep .5
-kubectl apply -f 2_nginx_ingress/nodeport.yaml
+kubectl apply -f 2_nginx_ingress/
 sleep .5
 
 ## DEPLOY arcadia & dvwa & Hackazon
