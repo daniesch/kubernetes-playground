@@ -1,27 +1,13 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-db
-  namespace: nginx-ingress
-  labels:
-    app: nginx-db
-    service: nginx-db
-spec:
-  ports:
-  - port: 80
-    name: nginx-db-80
-    protocol: TCP
-    name: nginx-db
-  selector:
-    app: nginx-ingress
----
-
-
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: nginx-db-ingress
   namespace: nginx-ingress
+  annotations:
+    nginx.org/server-snippets:
+      location / {
+        return 301 /dashboard.html;
+      }
 spec:
   tls:
   - hosts:
@@ -33,5 +19,5 @@ spec:
       paths:
       - path: /dashboard.html
         backend:
-          serviceName: nginx-db
-          servicePort: 80
+          serviceName: nginx-ingress
+          servicePort: 8080
