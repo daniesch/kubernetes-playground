@@ -40,10 +40,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - arcadia.example.com
+    - arcadia.schuler.io
     secretName: default-server-secret-arcadia
   rules:
-  - host: arcadia.example.com
+  - host: arcadia.schuler.io
     http:
       paths:
       - path: /
