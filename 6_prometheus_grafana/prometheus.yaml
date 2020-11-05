@@ -333,10 +333,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - prometheus.schuler.io
+    - prometheus.example.com
     secretName: default-server-secret-monitoring
   rules:
-  - host: prometheus.schuler.io
+  - host: prometheus.example.com
     http:
       paths:
       - path: /
