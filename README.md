@@ -110,12 +110,12 @@ https://storage.googleapis.com/minikube/releases/latest/minikube-installer.exe
 
 I added my pvt DOMAIN (schuler.io) for myself. Feel free to change that in all the APP Deployments. If you like to keep it change you hosts file to point to your k8s node.
 
-## Deploy Full Infrastracture
+## Deploy the NAP DEMO
 
-with the following shell script will you be able to deploy all Apps, with nginx ingress.(NO NAP ADDED AT THIS STAGE)
+with the following shell script will you be able to deploy all Apps, with nginx ingress.(NO NAP-INGRESS RULES ADDED AT THIS STAGE)
 
 ```
-./full_infra.sh
+./deploy-nap-demo.sh
 ```
 
 List the new deployed pods:
@@ -124,13 +124,38 @@ List the new deployed pods:
 kubectl get pods -owide -A
 ```
 
-You should se that we newly deployed nginx KIC, ARCADIA, DVWA & Hackazon. On Top did i Add Prometheus, Grafana & Alertmanager, just for getting a felling with it.
+You should se that we newly deployed nginx KIC, ARCADIA, DVWA & Hackazon.
 
 You will be now apple to brow your Apps in the Browser.
 
-like dvwa.schuler.io:30080 or hackazon.schuler.io:30443
+like dvwa.example.com:30080 or hackazon.example.com:30443
 
 ## Delete the Deployments
+
+```
+./cleanup_nap.sh
+```
+
+
+### Deploy the FULL Infra
+
+You will also have the chance to deploy Prometheus & Grafana to your ENV.
+
+If you already Deployed the NAP Demo, use the follewong command;
+
+```
+kubectl apply -f 6_prometheus_grafana/
+```
+
+This will deploy some more Pods and you will have access to Prometheus and Grafana with some pre Installed Dashboard's.
+
+Did you not Deploy the NAP demo, lunch the Bashscript for the Full Infra;
+
+```
+./full_infra.sh
+```
+
+and to cleanup everithing after you played around, execute the CleanUP.
 
 ```
 ./full_cleanup.sh
