@@ -22,30 +22,14 @@ spec:
         name: grafana-core
         imagePullPolicy: IfNotPresent
         # env:
-        resources:
-          # keep request = limit to keep this container in guaranteed class
-          limits:
-            cpu: 100m
-            memory: 100Mi
-          requests:
-            cpu: 100m
-            memory: 100Mi
+        # resources:
+        #   limits:
+        #     cpu: 100m
+        #     memory: 100Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 100Mi
         env:
-          # The following env variables set up basic auth twith the default admin user and admin password.
-          - name: GF_AUTH_BASIC_ENABLED
-            value: "true"
-          - name: GF_SECURITY_ADMIN_USER
-            valueFrom:
-              secretKeyRef:
-                name: grafana
-                key: admin-username
-          - name: GF_SECURITY_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: grafana
-                key: admin-password
-          - name: GF_AUTH_ANONYMOUS_ENABLED
-            value: "false"
         readinessProbe:
           httpGet:
             path: /login
@@ -56,18 +40,6 @@ spec:
       volumes:
       - name: grafana-persistent-storage
         emptyDir: {}
-
----
-apiVersion: v1
-kind: Secret
-data:
-  admin-password: YWRtaW4=
-  admin-username: YWRtaW4=
-metadata:
-  name: grafana
-  namespace: monitoring
-type: Opaque
-
 ---
 apiVersion: v1
 kind: Service
@@ -94,10 +66,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - grafana.example.com
+    - grafana.schuler.io
     secretName: default-server-secret-monitoring
   rules:
-  - host: grafana.example.com
+  - host: grafana.schuler.io
     http:
       paths:
       - path: /

@@ -26,29 +26,23 @@ spec:
           - '-storage.local.retention=12h'
           - '-storage.local.memory-chunks=500000'
           - '-config.file=/etc/prometheus/prometheus.yaml'
-          - '-alertmanager.url=http://alertmanager:9093/'
         ports:
         - name: webui
           containerPort: 9090
-        resources:
-          requests:
-            cpu: 500m
-            memory: 500M
-          limits:
-            cpu: 500m
-            memory: 500M
+        # resources:
+        #   requests:
+        #     cpu: 100m
+        #     memory: 100M
+        #   limits:
+        #     cpu: 100m
+        #     memory: 100M
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
-        - name: rules-volume
-          mountPath: /etc/prometheus-rules
       volumes:
       - name: config-volume
         configMap:
           name: prometheus-core
-      - name: rules-volume
-        configMap:
-          name: prometheus-rules
 
 ---
 apiVersion: apps/v1
@@ -62,7 +56,7 @@ metadata:
     description: |
       This `DaemonSet` provides metrics in Prometheus format about disk usage on the nodes.
       The container `read-du` reads in sizes of all directories below /mnt and writes that to `/tmp/metrics`. It only reports directories larger then `100M` for now.
-      The other container `caddy` just hands out the contents of that file on request via `http` on `/metrics` at port `9102` which are the defaults for Prometheus.
+      The other container `caddy` just hands out the contents of that file on request via `http` on `/metrics` at port `9113` which are the defaults for Prometheus.
       These are scheduled on every node in the Kubernetes cluster.
       To choose directories from the node to check, just mount them on the `read-du` container below `/mnt`.
 spec:
@@ -75,11 +69,11 @@ spec:
         app: node-directory-size-metrics
       annotations:
         prometheus.io/scrape: 'true'
-        prometheus.io/port: '9102'
+        prometheus.io/port: '9113'
         description: |
           This `Pod` provides metrics in Prometheus format about disk usage on the node.
           The container `read-du` reads in sizes of all directories below /mnt and writes that to `/tmp/metrics`. It only reports directories larger then `100M` for now.
-          The other container `caddy` just hands out the contents of that file on request on `/metrics` at port `9102` which are the defaults for Prometheus.
+          The other container `caddy` just hands out the contents of that file on request on `/metrics` at port `9113` which are the defaults for Prometheus.
           This `Pod` is scheduled on every node in the Kubernetes cluster.
           To choose directories from the node to check just mount them on `read-du` below `/mnt`.
     spec:
@@ -87,8 +81,6 @@ spec:
       - name: read-du
         image: giantswarm/tiny-tools
         imagePullPolicy: Always
-        # FIXME threshold via env var
-        # The
         command:
         - fish
         - --command
@@ -113,10 +105,10 @@ spec:
         image: dockermuenster/caddy:0.9.3
         command:
         - "caddy"
-        - "-port=9102"
+        - "-port=9113"
         - "-root=/var/www"
         ports:
-        - containerPort: 9102
+        - containerPort: 9113
         volumeMounts:
         - name: metrics
           mountPath: /var/www
@@ -313,79 +305,6 @@ spec:
   type: ClusterIP
 ---
 apiVersion: v1
-data:
-  cpu-usage.rules: |
-    ALERT NodeCPUUsage
-      IF (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
-      FOR 2m
-      LABELS {
-        severity="page"
-      }
-      ANNOTATIONS {
-        SUMMARY = "{{$labels.instance}}: High CPU usage detected",
-        DESCRIPTION = "{{$labels.instance}}: CPU usage is above 75% (current value is: {{ $value }})"
-      }
-  instance-availability.rules: |
-    ALERT InstanceDown
-      IF up == 0
-      FOR 1m
-      LABELS { severity = "page" }
-      ANNOTATIONS {
-        summary = "Instance {{ $labels.instance }} down",
-        description = "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.",
-      }
-  low-disk-space.rules: |
-    ALERT NodeLowRootDisk
-      IF ((node_filesystem_size{mountpoint="/root-disk"} - node_filesystem_free{mountpoint="/root-disk"} ) / node_filesystem_size{mountpoint="/root-disk"} * 100) > 75
-      FOR 2m
-      LABELS {
-        severity="page"
-      }
-      ANNOTATIONS {
-        SUMMARY = "{{$labels.instance}}: Low root disk space",
-        DESCRIPTION = "{{$labels.instance}}: Root disk usage is above 75% (current value is: {{ $value }})"
-      }
-
-    ALERT NodeLowDataDisk
-      IF ((node_filesystem_size{mountpoint="/data-disk"} - node_filesystem_free{mountpoint="/data-disk"} ) / node_filesystem_size{mountpoint="/data-disk"} * 100) > 75
-      FOR 2m
-      LABELS {
-        severity="page"
-      }
-      ANNOTATIONS {
-        SUMMARY = "{{$labels.instance}}: Low data disk space",
-        DESCRIPTION = "{{$labels.instance}}: Data disk usage is above 75% (current value is: {{ $value }})"
-      }
-  mem-usage.rules: |
-    ALERT NodeSwapUsage
-      IF (((node_memory_SwapTotal-node_memory_SwapFree)/node_memory_SwapTotal)*100) > 75
-      FOR 2m
-      LABELS {
-        severity="page"
-      }
-      ANNOTATIONS {
-        SUMMARY = "{{$labels.instance}}: Swap usage detected",
-        DESCRIPTION = "{{$labels.instance}}: Swap usage usage is above 75% (current value is: {{ $value }})"
-      }
-
-    ALERT NodeMemoryUsage
-      IF (((node_memory_MemTotal-node_memory_MemAvailable)/(node_memory_MemTotal)*100)) > 75
-      FOR 2m
-      LABELS {
-        severity="page"
-      }
-      ANNOTATIONS {
-        SUMMARY = "{{$labels.instance}}: High memory usage detected",
-        DESCRIPTION = "{{$labels.instance}}: Memory usage is above 75% (current value is: {{ $value }})"
-      }
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: prometheus-rules
-  namespace: monitoring
-
----
-apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
@@ -414,10 +333,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - prometheus.example.com
+    - prometheus.schuler.io
     secretName: default-server-secret-monitoring
   rules:
-  - host: prometheus.example.com
+  - host: prometheus.schuler.io
     http:
       paths:
       - path: /

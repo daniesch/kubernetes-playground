@@ -40,10 +40,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - hackazon.example.com
+    - hackazon.schuler.io
     secretName: default-server-secret-hackazon
   rules:
-  - host: hackazon.example.com
+  - host: hackazon.schuler.io
     http:
       paths:
       - path: /
