@@ -18,7 +18,8 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: danisch/nginx-plus-nap:1.9.0
+### Don't forgett to add your NAP Docker Image
+      - image: add your repo:1.9.0
         imagePullPolicy: IfNotPresent
         name: nginx-plus-ingress
         ports:
