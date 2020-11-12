@@ -7,8 +7,6 @@ kubectl apply -f 1_basicdeployment/rbac.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/ap-rbac.yaml
 sleep .5
-kubectl apply -f 1_basicdeployment/ingress-class.yaml
-sleep .5
 kubectl apply -f 1_basicdeployment/default-server-secret.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/nginx-config.yaml
