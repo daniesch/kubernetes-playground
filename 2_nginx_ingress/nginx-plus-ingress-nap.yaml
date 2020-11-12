@@ -12,14 +12,10 @@ spec:
     metadata:
       labels:
         app: nginx-ingress
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9113"
     spec:
       serviceAccountName: nginx-ingress
       containers:
-### Don't forgett to add your NAP Docker Image
-      - image: add your repo:1.9.0
+      - image: danisch/nginx-plus-nap:1.8.1
         imagePullPolicy: IfNotPresent
         name: nginx-plus-ingress
         ports:
@@ -29,8 +25,6 @@ spec:
           containerPort: 443
         - name: readiness-port
           containerPort: 8081
-        - name: prometheus
-          containerPort: 9113
         readinessProbe:
           httpGet:
             path: /nginx-ready
@@ -58,10 +52,4 @@ spec:
           - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
           - -enable-app-protect
-          - -nginx-status-allow-cidrs=0.0.0.0/0
-          - -nginx-status-port=30880
-         #- -v=3 # Enables extensive logging. Useful for troubleshooting.
           - -report-ingress-status
-         #- -external-service=nginx-ingress
-          - -enable-prometheus-metrics
-         #- -global-configuration=$(POD_NAMESPACE)/nginx-configuration
