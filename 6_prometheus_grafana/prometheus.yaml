@@ -30,13 +30,13 @@ spec:
         - name: webui
           containerPort: 9090
         ## I reccomend defining resource reqests on a proper Cluster!
-        # resources:
-        #   requests:
-        #     cpu: 500m
-        #     memory: 500M
-        #   limits:
-        #     cpu: 500m
-        #     memory: 500M
+        resources:
+          requests:
+            cpu: 500m
+            memory: 500M
+          limits:
+            cpu: 500m
+            memory: 500M
         volumeMounts:
         - name: config-volume
           mountPath: /etc/prometheus
