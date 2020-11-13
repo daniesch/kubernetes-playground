@@ -12,6 +12,9 @@ spec:
     metadata:
       labels:
         app: nginx-ingress
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9113"
     spec:
       serviceAccountName: nginx-ingress
       containers:
@@ -25,6 +28,8 @@ spec:
           containerPort: 443
         - name: readiness-port
           containerPort: 8081
+        - name: prometheus
+          containerPort: 9113
         readinessProbe:
           httpGet:
             path: /nginx-ready
@@ -53,3 +58,4 @@ spec:
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
           - -enable-app-protect
           - -report-ingress-status
+          - -enable-prometheus-metrics

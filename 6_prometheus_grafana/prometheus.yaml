@@ -104,6 +104,7 @@ spec:
           mountPath: /tmp
       - name: caddy
         image: dockermuenster/caddy:0.9.3
+        imagePullPolicy: IfNotPresent
         command:
         - "caddy"
         - "-port=9113"
