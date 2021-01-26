@@ -19,6 +19,8 @@ kubectl apply -f 1_basicdeployment/ts-definition.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/policy-definition.yaml
 sleep .5
+kubectl apply -f 1_basicdeployment/ingress-class.yaml
+sleep .5
 kubectl apply -f 1_basicdeployment/gc-definition.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/global-configuration.yaml

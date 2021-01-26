@@ -36,14 +36,15 @@ metadata:
     appprotect.f5.com/app-protect-security-log-enable: "True"
     appprotect.f5.com/app-protect-security-log: "default/logconf"
     appprotect.f5.com/app-protect-security-log-destination: "syslog:server=10.1.20.6:5144"
+    kubernetes.io/ingress.class: "nginx"
 
 spec:
   tls:
   - hosts:
-    - dvwa.example.com
+    - dvwa.schuler.io
     secretName: default-server-secret-dvwa
   rules:
-  - host: dvwa.example.com
+  - host: dvwa.schuler.io
     http:
       paths:
       - path: /

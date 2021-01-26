@@ -98,13 +98,15 @@ kind: Ingress
 metadata:
   name: grafana-ingress
   namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
-    - grafana.example.com
+    - grafana.schuler.io
     secretName: default-server-secret-monitoring
   rules:
-  - host: grafana.example.com
+  - host: grafana.schuler.io
     http:
       paths:
       - path: /

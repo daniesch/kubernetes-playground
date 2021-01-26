@@ -4,13 +4,15 @@ kind: Ingress
 metadata:
   name: arcadia-ingress
   namespace: arcadia
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
-    - arcadia.example.com
+    - arcadia.schuler.io
     secretName: default-server-secret-arcadia
   rules:
-  - host: arcadia.example.com
+  - host: arcadia.schuler.io
     http:
       paths:
       - path: /
