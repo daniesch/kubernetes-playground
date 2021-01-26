@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: nginx-ingress
   namespace: nginx-ingress
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: nginx-ingress
@@ -17,7 +18,7 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: danisch/nginx-plus-nap:1.8.1
+      - image: danisch/nginx-plus-nap:1.9.1
         imagePullPolicy: Always
         name: nginx-plus-ingress
         ports:

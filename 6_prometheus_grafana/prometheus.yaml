@@ -335,10 +335,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - prometheus.example.com
+    - prometheus.schuler.io
     secretName: default-server-secret-monitoring
   rules:
-  - host: prometheus.example.com
+  - host: prometheus.schuler.io
     http:
       paths:
       - path: /

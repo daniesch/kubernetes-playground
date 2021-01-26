@@ -40,10 +40,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - dvwa.example.com
+    - dvwa.schuler.io
     secretName: default-server-secret-dvwa
   rules:
-  - host: dvwa.example.com
+  - host: dvwa.schuler.io
     http:
       paths:
       - path: /
