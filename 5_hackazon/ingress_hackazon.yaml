@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: hackazon-ingress
   namespace: hackazon
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:

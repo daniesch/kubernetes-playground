@@ -332,6 +332,8 @@ kind: Ingress
 metadata:
   name: prometheus-ingress
   namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:

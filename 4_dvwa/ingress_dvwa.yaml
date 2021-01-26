@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: dvwa-ingress
   namespace: dvwa
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:

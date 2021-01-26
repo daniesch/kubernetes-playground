@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: arcadia-ingress
   namespace: arcadia
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:

@@ -98,6 +98,8 @@ kind: Ingress
 metadata:
   name: grafana-ingress
   namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
