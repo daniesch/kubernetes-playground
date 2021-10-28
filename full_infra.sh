@@ -29,6 +29,9 @@ kubectl apply -f 1_basicdeployment/ap-logconf-definition.yaml
 sleep .5
 kubectl apply -f 1_basicdeployment/ap-policy-definition.yaml
 sleep .5
+kubectl apply -f 1_basicdeployment/
+sleep .5
+
 
 ## DEPLOY Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
 

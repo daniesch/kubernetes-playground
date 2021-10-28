@@ -46,4 +46,4 @@ sleep .5
 
 
 
-kubectl delete -f 1_basicdeployment/ns-and-sa.yaml
+kubectl delete -f 1_basicdeployment/
