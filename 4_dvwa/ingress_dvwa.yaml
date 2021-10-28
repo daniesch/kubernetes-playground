@@ -1,11 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dvwa-ingress
   namespace: dvwa
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - dvwa.example.com
@@ -15,6 +14,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: dvwa
-          servicePort: 80
+          service:
+            name: dvwa
+            port:
+              number: 80

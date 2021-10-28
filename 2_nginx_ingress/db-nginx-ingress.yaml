@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-db-ingress
@@ -9,6 +9,7 @@ metadata:
         return 301 /dashboard.html;
       }
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - nginx-db.example.com
@@ -18,6 +19,9 @@ spec:
     http:
       paths:
       - path: /dashboard.html
+        pathType: Prefix
         backend:
-          serviceName: nginx-ingress
-          servicePort: 30880
+          service:
+            name: nginx-ingress
+            port:
+              number: 30880

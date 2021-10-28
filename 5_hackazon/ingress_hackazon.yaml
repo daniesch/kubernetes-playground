@@ -1,11 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hackazon-ingress
   namespace: hackazon
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
     - hackazon.example.com
@@ -15,6 +14,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: hackazon
-          servicePort: 80
+          service:
+            name: hackazon
+            port:
+              number: 80
