@@ -1,4 +1,4 @@
-## DELETE GLOBAL filse & Hackazone
+## DELETE GLOBAL filse 
 
 kubectl delete -f 1_basicdeployment/global-configuration.yaml
 sleep .5
