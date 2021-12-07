@@ -1,4 +1,4 @@
-## DEPLY GLOBAL filse 
+## DEPLY GLOBAL filse Hallo Marcus
 
 kubectl apply -f 1_basicdeployment/ns-and-sa.yaml
 sleep .5

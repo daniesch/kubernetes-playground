@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx-ingress
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-ingress
+  namespace: nginx-ingress
+  
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dvwa
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: arcadia
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hackazon
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-state-metrics
+    app.kubernetes.io/version: 2.0.0-alpha.2
+  name: kube-state-metrics
+  namespace: monitoring
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-k8s
+  namespace: monitoring
