@@ -1,4 +1,4 @@
-## DEPLY GLOBAL filse & Hackazone
+## DEPLY GLOBAL filse 
 
 sleep .5
 kubectl apply -f 1_basicdeployment/ns-and-sa.yaml
@@ -31,6 +31,15 @@ sleep .5
 ## DEPLOY Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
 
 kubectl apply -f 2_nginx_ingress/
+sleep .5
+
+## DEPLOY arcadia & dvwa & Hackazon
+
+kubectl apply -f 3_arcadia_app/
+sleep .5
+kubectl apply -f 4_dvwa/
+sleep .5
+kubectl apply -f 5_hackazon/
 sleep .5
 
 ## DEPLOY arcadia & dvwa & Hackazon
