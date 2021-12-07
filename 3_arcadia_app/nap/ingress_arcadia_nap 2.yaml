@@ -1,0 +1,65 @@
+apiVersion: appprotect.f5.com/v1beta1
+kind: APPolicy
+metadata:
+  name: dataguard-blocking
+spec:
+  policy:
+    applicationLanguage: utf-8
+    blocking-settings:
+      violations:
+      - alarm: true
+        block: false
+        name: VIOL_DATA_GUARD
+    data-guard:
+      creditCardNumbers: true
+      enabled: true
+      enforcementMode: ignore-urls-in-list
+      enforcementUrls: []
+      lastCcnDigitsToExpose: 4
+      lastSsnDigitsToExpose: 4
+      maskData: true
+      usSocialSecurityNumbers: true
+    enforcementMode: blocking
+    name: dataguard-alarm
+    template:
+      name: POLICY_TEMPLATE_NGINX_BASE
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: arcadia-ingress
+  namespace: arcadia
+  annotations:
+    appprotect.f5.com/app-protect-policy: "default/dataguard-blocking"
+    appprotect.f5.com/app-protect-enable: "True"
+    appprotect.f5.com/app-protect-security-log-enable: "True"
+    appprotect.f5.com/app-protect-security-log: "default/logconf"
+    appprotect.f5.com/app-protect-security-log-destination: "syslog:server=10.1.20.6:5144"
+    kubernetes.io/ingress.class: "nginx"
+
+spec:
+  tls:
+  - hosts:
+    - arcadia.example.com
+    secretName: default-server-secret-arcadia
+  rules:
+  - host: arcadia.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: main
+          servicePort: 80
+      - path: /files
+        backend:
+          serviceName: backend
+          servicePort: 80
+      - path: /api
+        backend:
+          serviceName: app2
+          servicePort: 80
+      - path: /app3
+        backend:
+          serviceName: app3
+          servicePort: 80
