@@ -18,14 +18,10 @@ spec:
         app: prometheus
         component: core
     spec:
-      volumes:
-      - name: config-volume
-        persistentVolumeClaim:
-          claimName: pvc-nfs-kubedata-prometheus
       serviceAccountName: prometheus-k8s
       containers:
       - name: prometheus
-        image: prom/prometheus:latest
+        image: prom/prometheus:v1.7.0
         args:
           - '-storage.local.retention=12h'
           - '-storage.local.memory-chunks=500000'
@@ -33,6 +29,7 @@ spec:
         ports:
         - name: webui
           containerPort: 9090
+        ## I reccomend defining resource reqests on a proper Cluster!
         resources:
           requests:
             cpu: 500m
@@ -106,7 +103,7 @@ spec:
         - name: metrics
           mountPath: /tmp
       - name: caddy
-        image: dockermuenster/caddy:latest
+        image: dockermuenster/caddy:0.9.3
         imagePullPolicy: IfNotPresent
         command:
         - "caddy"
@@ -155,6 +152,7 @@ spec:
       hostNetwork: true
       hostPID: true
 
+
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -182,8 +180,6 @@ data:
     rule_files:
       - "/etc/prometheus-rules/*.rules"
     scrape_configs:
-
-      # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L37
       - job_name: 'kubernetes-nodes'
         tls_config:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -195,8 +191,6 @@ data:
             regex: '(.*):10250'
             replacement: '${1}:10255'
             target_label: __address__
-
-      # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L79
       - job_name: 'kubernetes-endpoints'
         kubernetes_sd_configs:
           - role: endpoints
@@ -225,8 +219,6 @@ data:
           - source_labels: [__meta_kubernetes_service_name]
             action: replace
             target_label: kubernetes_name
-
-      # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L119
       - job_name: 'kubernetes-services'
         metrics_path: /probe
         params:
@@ -249,7 +241,6 @@ data:
             target_label: kubernetes_namespace
           - source_labels: [__meta_kubernetes_service_name]
             target_label: kubernetes_name
-
       - job_name: 'kubernetes-pods'
         kubernetes_sd_configs:
           - role: pod
@@ -277,7 +268,6 @@ data:
           - source_labels: [__meta_kubernetes_pod_container_port_number]
             action: keep
             regex: 9\d{3}
-
       - job_name: 'kubernetes-cadvisor'
         scheme: https
         tls_config:
@@ -295,77 +285,75 @@ data:
             regex: (.+)
             target_label: __metrics_path__
             replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
-       # - job_name: 'nginx-mesh-sidecars'
-       #   kubernetes_sd_configs:
-       #     - role: pod
-       #   relabel_configs:
-       #     - source_labels: [__meta_kubernetes_pod_container_name]
-       #       action: keep
-       #       regex: nginx-mesh-sidecar
-       #     - action: labelmap
-       #       regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
-       #     - action: labeldrop
-       #       regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
-       #     - action: labelmap
-       #       regex: __meta_kubernetes_pod_label_(.+)
-       #     - source_labels: [__meta_kubernetes_namespace]
-       #       action: replace
-       #       target_label: namespace
-       #     - source_labels: [__meta_kubernetes_pod_name]
-       #       action: replace
-       #       target_label: pod
-       #
-       #  - job_name: 'nginx-plus-ingress'
-       #    kubernetes_sd_configs:
-       #      - role: pod
-       #    relabel_configs:
-       #      - source_labels: [__meta_kubernetes_pod_container_name]
-       #        action: keep
-       #        regex: nginx-plus-ingress
-       #      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-       #        action: keep
-       #        regex: true
-       #      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-       #        action: replace
-       #        target_label: __address__
-       #        regex: (.+)(?::\d+);(\d+)
-       #        replacement: $1:$2
-       #      - source_labels: [__meta_kubernetes_namespace]
-       #        action: replace
-       #        target_label: namespace
-       #      - source_labels: [__meta_kubernetes_pod_name]
-       #        action: replace
-       #        target_label: pod
-       #      - action: labelmap
-       #        regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
-       #      - action: labeldrop
-       #        regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
-       #      - action: labelmap
-       #        regex: __meta_kubernetes_pod_label_(.+)
-       #      - action: labelmap
-       #        regex: __meta_kubernetes_pod_annotation_nsm_nginx_com_enable_(.+)
-       #    metric_relabel_configs:
-       #      - source_labels: [__name__]
-       #        regex: 'nginx_ingress_controller_upstream_server_response_latency_ms(.+)'
-       #        target_label: __name__
-       #        replacement: 'nginxplus_upstream_server_response_latency_ms$1'
-       #      - source_labels: [__name__]
-       #        regex: 'nginx_ingress_nginxplus(.+)'
-       #        target_label: __name__
-       #        replacement: 'nginxplus$1'
-       #      - source_labels: [service]
-       #        target_label: dst_service
-       #      - source_labels: [resource_namespace]
-       #        target_label: dst_namespace
-       #      - source_labels: [pod_owner]
-       #        regex: '(.+)\/(.+)'
-       #        target_label: dst_$1
-       #        replacement: $2
-       #      - action: labeldrop
-       #        regex: pod_owner
-       #      - source_labels: [pod_name]
-       #        target_label: dst_pod
+       - job_name: 'nginx-mesh-sidecars'
+         kubernetes_sd_configs:
+           - role: pod
+         relabel_configs:
+           - source_labels: [__meta_kubernetes_pod_container_name]
+             action: keep
+             regex: nginx-mesh-sidecar
+           - action: labelmap
+             regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
+           - action: labeldrop
+             regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
+           - action: labelmap
+             regex: __meta_kubernetes_pod_label_(.+)
+           - source_labels: [__meta_kubernetes_namespace]
+             action: replace
+             target_label: namespace
+           - source_labels: [__meta_kubernetes_pod_name]
+             action: replace
+             target_label: pod
+        - job_name: 'nginx-plus-ingress'
+          kubernetes_sd_configs:
+            - role: pod
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_container_name]
+              action: keep
+              regex: nginx-plus-ingress
+            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+              action: keep
+              regex: true
+            - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+              action: replace
+              target_label: __address__
+              regex: (.+)(?::\d+);(\d+)
+              replacement: $1:$2
+            - source_labels: [__meta_kubernetes_namespace]
+              action: replace
+              target_label: namespace
+            - source_labels: [__meta_kubernetes_pod_name]
+              action: replace
+              target_label: pod
+            - action: labelmap
+              regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
+            - action: labeldrop
+              regex: __meta_kubernetes_pod_label_nsm_nginx_com_(.+)
+            - action: labelmap
+              regex: __meta_kubernetes_pod_label_(.+)
+            - action: labelmap
+              regex: __meta_kubernetes_pod_annotation_nsm_nginx_com_enable_(.+)
+          metric_relabel_configs:
+            - source_labels: [__name__]
+              regex: 'nginx_ingress_controller_upstream_server_response_latency_ms(.+)'
+              target_label: __name__
+              replacement: 'nginxplus_upstream_server_response_latency_ms$1'
+            - source_labels: [__name__]
+              regex: 'nginx_ingress_nginxplus(.+)'
+              target_label: __name__
+              replacement: 'nginxplus$1'
+            - source_labels: [service]
+              target_label: dst_service
+            - source_labels: [resource_namespace]
+              target_label: dst_namespace
+            - source_labels: [pod_owner]
+              regex: '(.+)\/(.+)'
+              target_label: dst_$1
+              replacement: $2
+            - action: labeldrop
+              regex: pod_owner
+            - source_labels: [pod_name]
+              target_label: dst_pod
 
 ---
 apiVersion: v1
