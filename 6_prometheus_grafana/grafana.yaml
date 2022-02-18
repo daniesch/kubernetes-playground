@@ -102,10 +102,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - grafana.example.com
+    - grafana.gcp.f5demos.ch
     secretName: default-server-secret-monitoring
   rules:
-  - host: grafana.example.com
+  - host: grafana.gcp.f5demos.ch
     http:
       paths:
       - path: /

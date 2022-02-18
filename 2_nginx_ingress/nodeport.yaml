@@ -9,7 +9,8 @@ metadata:
       prometheus.io/port: "9113"
       prometheus.io/path: '/metrics'
 spec:
-  type: NodePort
+  type: LoadBalancer
+#  type: NodePort
   ports:
   - port: 80
     targetPort: 80

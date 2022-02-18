@@ -7,10 +7,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - hackazon.example.com
+    - hackazon.gcp.f5demos.ch
     secretName: default-server-secret-hackazon
   rules:
-  - host: hackazon.example.com
+  - host: hackazon.gcp.f5demos.ch
     http:
       paths:
       - path: /

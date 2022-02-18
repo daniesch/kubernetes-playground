@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - arcadia.example.com
+    - arcadia.gcp.f5demos.ch
     secretName: default-server-secret-arcadia
   rules:
-  - host: arcadia.example.com
+  - host: arcadia.gcp.f5demos.ch
     http:
       paths:
       - path: /

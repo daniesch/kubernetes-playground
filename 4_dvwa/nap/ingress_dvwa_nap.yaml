@@ -41,10 +41,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - dvwa.example.com
+    - dvwa.gcp.f5demos.ch
     secretName: default-server-secret-dvwa
   rules:
-  - host: dvwa.example.com
+  - host: dvwa.gcp.f5demos.ch
     http:
       paths:
       - path: /
