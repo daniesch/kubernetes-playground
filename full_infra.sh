@@ -3,6 +3,8 @@
 sleep .5
 kubectl apply -f 1_basicdeployment/ns-and-sa.yaml
 sleep .5
+kubectl create -f 1_basicdeployment/monitoring
+sleep .5
 kubectl apply -f 1_basicdeployment/nginx/
 sleep .5
 kubectl apply -f 1_basicdeployment/nginx/rbac
@@ -11,8 +13,7 @@ kubectl apply -f 1_basicdeployment/nginx/crds
 sleep .5
 kubectl apply -f 1_basicdeployment/default-server-secret.yaml
 sleep .5
-kubectl apply -f 1_basicdeployment/rbac.yaml
-sleep .5
+
 
 ## DEPLOY Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
 

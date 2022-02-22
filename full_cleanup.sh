@@ -5,7 +5,7 @@ kubectl delete -f 1_basicdeployment/default-server-secret.yaml
 sleep .5
 kubectl delete -f 1_basicdeployment/nginx/
 sleep .5
-kubectl delete -f 1_basicdeployment/rbac.yaml
+kubectl delete --ignore-not-found=true -f 1_basicdeployment/monitoring
 sleep .5
 kubectl delete -f 1_basicdeployment/nginx/crds/
 sleep .5
@@ -28,6 +28,6 @@ sleep .5
 
 ## DELETE prometheus & grafana
 
-kubectl delete -f 6_prometheus_grafana/
+kubectl delete --ignore-not-found=true -f 6_prometheus_grafana/
 sleep .5
 kubectl delete -f 1_basicdeployment/ns-and-sa.yaml
