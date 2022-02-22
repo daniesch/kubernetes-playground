@@ -51,6 +51,8 @@ spec:
               description: VirtualServerSpec is the spec of the VirtualServer resource.
               type: object
               properties:
+                dos:
+                  type: string
                 host:
                   type: string
                 http-snippets:
@@ -149,6 +151,8 @@ spec:
                                 type: integer
                               type:
                                 type: string
+                      dos:
+                        type: string
                       errorPages:
                         type: array
                         items:
@@ -521,6 +525,10 @@ spec:
                             type: boolean
                           fails:
                             type: integer
+                          grpcService:
+                            type: string
+                          grpcStatus:
+                            type: integer
                           headers:
                             type: array
                             items:
@@ -535,10 +543,14 @@ spec:
                             type: string
                           jitter:
                             type: string
+                          mandatory:
+                            type: boolean
                           passes:
                             type: integer
                           path:
                             type: string
+                          persistent:
+                            type: boolean
                           port:
                             type: integer
                           read-timeout:
@@ -617,6 +629,8 @@ spec:
                         properties:
                           enable:
                             type: boolean
+                      type:
+                        type: string
                       use-cluster-ip:
                         type: boolean
             status:

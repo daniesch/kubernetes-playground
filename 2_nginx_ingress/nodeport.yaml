@@ -29,3 +29,19 @@ spec:
     name: https
   selector:
     app: nginx-ingress
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-appprotect-dos-arb
+  namespace: nginx-ingress
+spec:
+  selector:
+    app: appprotect-dos-arb
+  ports:
+    - name: arb
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  clusterIP: None
