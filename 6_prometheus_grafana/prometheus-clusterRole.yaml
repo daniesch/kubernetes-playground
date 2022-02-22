@@ -12,7 +12,20 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - nodes
+  - nodes/proxy
+  - services
+  - endpoints
+  - pods
   - nodes/metrics
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
   verbs:
   - get
 - nonResourceURLs:

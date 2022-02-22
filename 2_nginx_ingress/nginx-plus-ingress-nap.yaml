@@ -14,7 +14,8 @@ spec:
         app: nginx-ingress
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "9113"
+        prometheus.io/port: "10254"
+        prometheus.io/path: '/metrics'
     spec:
       serviceAccountName: nginx-ingress
       containers:
@@ -31,7 +32,8 @@ spec:
         - name: readiness-port
           containerPort: 8081
         - name: prometheus
-          containerPort: 9113
+          containerPort: 10254
+          protocol: TCP
         readinessProbe:
           httpGet:
             path: /nginx-ready
@@ -64,4 +66,5 @@ spec:
           - -enable-prometheus-metrics
           - -nginx-status-allow-cidrs=0.0.0.0/0
           - -nginx-status-port=30880
+          # - -enable-latency-metric
           #- -v=3
