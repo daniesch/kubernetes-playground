@@ -3,13 +3,13 @@
 
 kubectl delete -f 1_basicdeployment/default-server-secret.yaml
 sleep .5
-kubectl delete -f 1_basicdeployment/nginx/
+kubectl delete --ignore-not-found=true -f 1_basicdeployment/nginx/
 sleep .5
-kubectl delete --ignore-not-found=true -f 1_basicdeployment/monitoring
+kubectl delete --ignore-not-found=true -f 1_basicdeployment/rbac.yaml
 sleep .5
-kubectl delete -f 1_basicdeployment/nginx/crds/
+kubectl delete --ignore-not-found=true -f 1_basicdeployment/nginx/crds/
 sleep .5
-kubectl delete -f 1_basicdeployment/nginx/rbac/
+kubectl delete --ignore-not-found=true -f 1_basicdeployment/nginx/rbac/
 sleep .5
 
 ## DELETE Ingress NGINX PLUS & Service for Ingress & dashboard for nginx
