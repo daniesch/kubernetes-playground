@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hackazon-ingress
+  namespace: hackazon
+spec:
+  ingressClassName: nginx-sm
+  tls:
+  - hosts:
+    - hackazon.nsm.gcp.f5demos.ch
+    secretName: default-server-secret-hackazon
+  rules:
+  - host: hackazon.nsm.gcp.f5demos.ch
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hackazon
+            port:
+              number: 80

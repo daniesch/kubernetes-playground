@@ -6,8 +6,7 @@ metadata:
   namespace: nginx-ingress
   annotations:
       prometheus.io/scrape: "true"
-      prometheus.io/port: "10254"
-      prometheus.io/path: '/metrics'
+      prometheus.io/port: "9113"
 spec:
   type: LoadBalancer
 #  type: NodePort

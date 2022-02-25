@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: grafana-ingress
   namespace: monitoring
-  annotations:
-    appprotectdos.f5.com/app-protect-dos-resource: "default/dos-protected"
 spec:
   ingressClassName: nginx
   tls:

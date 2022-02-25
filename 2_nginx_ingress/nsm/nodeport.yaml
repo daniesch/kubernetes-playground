@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-nsm
+  namespace: nginx-ingress
+  annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9113"
+      prometheus.io/path: '/metrics'
+spec:
+  type: LoadBalancer
+#  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30081
+    protocol: TCP
+    name: http
+  - port: 30881
+    targetPort: 30881
+    nodePort: 30881
+    protocol: TCP
+    name: httpv2
+  - port: 443
+    targetPort: 443
+    nodePort: 30444
+    protocol: TCP
+    name: https
+  selector:
+    app: nginx-ingress-nsm

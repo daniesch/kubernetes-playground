@@ -1,0 +1,36 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-ingress-prometheus
+  namespace: nginx-ingress
+  labels:
+    app: nginx-ingress
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      app: nginx-ingress-prometheus
+  namespaceSelector:
+    matchNames:
+    - nginx-ingress
+  endpoints:
+  - interval: 2s
+    port: prometheus
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-ingress-prometheus
+  name: nginx-ingress-prometheus
+  namespace: nginx-ingress
+spec:
+  ports:
+  - name: prometheus
+    port: 9113
+    targetPort: prometheus
+  selector:
+    app: nginx-ingress

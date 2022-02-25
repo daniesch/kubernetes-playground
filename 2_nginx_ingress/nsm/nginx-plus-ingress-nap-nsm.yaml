@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-ingress
+  name: nginx-ingress-nsm
   namespace: nginx-ingress
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: nginx-ingress
+      app: nginx-ingress-nsm
   template:
     metadata:
       labels:
-        app: nginx-ingress
-        nsm.nginx.com/deployment: nginx-ingress
+        app: nginx-ingress-nsm
+        nsm.nginx.com/deployment: nginx-ingress-nsm
         spiffe.io/spiffeid: "true"
       annotations:
         nsm.nginx.com/enable-ingress: "true"
@@ -24,14 +24,14 @@ spec:
       containers:
       - image: danisch/nginx-ingress-nap-dos:2.1.0
         imagePullPolicy: Always
-        name: nginx-plus-ingress
+        name: nginx-ingress-nsm
         ports:
         - name: http
           containerPort: 80
-          hostPort: 80
+          # hostPort: 80
         - name: https
           containerPort: 443
-          hostPort: 443
+          # hostPort: 443
         - name: readiness-port
           containerPort: 8081
         - name: prometheus
@@ -63,14 +63,13 @@ spec:
               fieldPath: metadata.name
         args:
           - -nginx-plus
+          - -ingress-class=nginx-sm
           - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
-          - -enable-app-protect
-          - -enable-app-protect-dos
           - -report-ingress-status
           - -enable-prometheus-metrics
           - -nginx-status-allow-cidrs=0.0.0.0/0
-          - -nginx-status-port=30880
+          - -nginx-status-port=30881
           #- -v=3
           - -enable-latency-metrics
           - -spire-agent-address=/run/spire/sockets/agent.sock

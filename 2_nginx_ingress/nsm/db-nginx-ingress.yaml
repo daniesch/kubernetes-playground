@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-db-ingress-nsm
+  namespace: nginx-ingress
+  annotations:
+    nginx.org/server-snippets:
+      location / {
+        return 301 /dashboard.html;
+      }
+spec:
+  ingressClassName: nginx-nsm
+  tls:
+  - hosts:
+    - nginx-db.nsm.gcp.f5demos.ch
+    secretName: default-server-secret-nginx-db
+  rules:
+  - host: nginx-db.nsm.gcp.f5demos.ch
+    http:
+      paths:
+      - path: /dashboard.html
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-ingress-nsm
+            port:
+              number: 30881

@@ -4,7 +4,7 @@ metadata:
   name: nginx-ingress
   namespace: nginx-ingress
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: nginx-ingress
@@ -14,8 +14,7 @@ spec:
         app: nginx-ingress
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "10254"
-        prometheus.io/path: '/metrics'
+        prometheus.io/port: "9113"
     spec:
       serviceAccountName: nginx-ingress
       containers:
@@ -25,14 +24,14 @@ spec:
         ports:
         - name: http
           containerPort: 80
-          hostPort: 80
+          # hostPort: 80
         - name: https
           containerPort: 443
-          hostPort: 443
+          # hostPort: 443
         - name: readiness-port
           containerPort: 8081
         - name: prometheus
-          containerPort: 10254
+          containerPort: 9113
           protocol: TCP
         readinessProbe:
           httpGet:

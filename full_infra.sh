@@ -31,5 +31,7 @@ sleep .5
 
 ## DEPLOY prometheus & grafana
 
+kubectl create secret generic additional-scrape-configs --from-file=2_nginx_ingress/nsm/additional/prometheus-additional.yaml -n monitoring
+sleep .5
 kubectl apply -f 6_prometheus_grafana/
 sleep .5
